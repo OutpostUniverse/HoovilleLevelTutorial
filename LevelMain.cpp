@@ -14,13 +14,13 @@ extern StartLocation startLocation[];
 // Level Info Exports
 // ==================
 
+// Note: ** Be sure to set these when you build your own level **
 // Note: These exports are required by Outpost2.exe from every level
 //		 DLL. They give values for the map and tech trees used by the
 //		 level and a description to place in the level listbox. The
 //		 last export is used to define characteristics of the level.
 //		 See RequiredExports.h for more details.
-// Note: ** Be sure to set these when you build your own level **
-
+// Defines a Multiplayer Last-One-Standing 4 player game (the DLL must be named with a "ml4" prefix).
 // Required data exports  (Description, Map, TechTree, GameType, NumPlayers)
 ExportLevelDetails("4 Player, LastOne, 'Hooville' map", "on4_01.map", "MULTITEK.TXT", MultiLastOneStanding, 4)
 
@@ -62,7 +62,6 @@ Export void GetSaveRegions(BufferDesc& bufferDesc)
 // Game Entry Point
 // ================
 
-
 // Note: ** Be sure to edit/fill in the following function. **
 // Note: The following function is called once by Outpost2.exe when the
 //		 level is first initialized. This is where you want to create
@@ -71,14 +70,19 @@ Export void GetSaveRegions(BufferDesc& bufferDesc)
 Export int InitProc()
 {
 	int i;
+	int combatUnitX, combatUnitY;
 
 	// Randomize starting locations
 	RandomizeList(4, startLocation);	// Randomize (first) 4 starting locations
 	// Place all bases on the map
-	for (i = 0; i < TethysGame::NoPlayers(); i++)
+	for (i = 0; i < TethysGame::NoPlayers(); ++i)
 	{
 		InitPlayerResources(i);				// Set resources for Player i
 		CreateBase(i, startLocation[i]);	// Create a base for Player i, using their selected start location
+		// Determine placement of combat units (1/4 way from start to center of map) and place them
+		combatUnitX = (startLocation[i].x * 3 + 96) / 4;
+		combatUnitY = (startLocation[i].y * 3 + 64) / 4;
+		CreateInitialCombatUnits(i, combatUnitX, combatUnitY);
 	}
 
 	// Misc initialization
@@ -95,6 +99,13 @@ Export int InitProc()
 	// Now for some fun...: if day/night is enabled, force night everywhere all the time =)
 	TethysGame::SetDaylightMoves(false);	// Freeze position of day/night
 	GameMap::SetInitialLightLevel(-32);		// Set daylight off the map, to feeze it in darkness
+
+	// Optionally setup some random meteor disasters according to Uses Disasters checkbox
+	if (TethysGame::CanHaveDisasters())
+	{
+		// Create a meteor every 2500-5000 ticks (25-50 marks)
+		Trigger &meteorTrigger = CreateTimeTrigger(true, false, 2500, 5000, "CreateMeteor");
+	}
 
 	// Just use a stock victory condition from OP2Helper
 	CreateLastOneStandingVictoryCondition();
@@ -115,6 +126,7 @@ Export void AIProc()
 
 // Trigger Call Backs
 // ==================
+
 // Note: To perform an action when a trigger fires (an event happens), 
 //		 create a function, with a name matching what was passed to the trigger,
 //		 of the following form:
@@ -126,4 +138,18 @@ Export void AIProc()
 // Empty dummy trigger used by victory condition (does nothing when event fires)
 Export void NoResponseToTrigger()
 {
+}
+
+// Note: ** Define your own trigger callbacks here **
+
+Export void CreateMeteor()
+{
+	// Note: GetRand(x) returns a number in the range 0..(x-1)
+	// The map used is 128x128 (and the bottom line doesn't seem to be used)
+	int x = 32 + TethysGame::GetRand(128);			// Random x coordinate: x ranges from 32..(width+32)
+	int y = TethysGame::GetRand(127);				// Random y coordinate: y ranges from 0..(height-2)
+	int disasterSize = TethysGame::GetRand(3);		// Small, Medium, or Large
+
+	// Create the meteor (which will appear in 10 ticks, to allow both warnings to be issued)
+	TethysGame::SetMeteor(x, y, disasterSize);
 }
