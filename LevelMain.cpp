@@ -121,3 +121,9 @@ Export void AIProc()
 // Export void CallBackNamePassedToTrigger()
 // {
 // }
+
+
+// Empty dummy trigger used by victory condition (does nothing when event fires)
+Export void NoResponseToTrigger()
+{
+}

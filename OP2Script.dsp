@@ -35,7 +35,7 @@ RSC=rc.exe
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "ReleaseMinSize"
-# PROP Intermediate_Dir "ReleaseMinSize"
+# PROP Intermediate_Dir "ReleaseMinSize-IntermediateFiles"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /O1 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "_ATL_DLL" /D "_ATL_MIN_CRT" /Yu"stdafx.h" /FD /c
@@ -50,6 +50,11 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
 # ADD LINK32 /nologo /base:"0x11000000" /subsystem:windows /dll /machine:I386
 # SUBTRACT LINK32 /pdb:none /nodefaultlib
+# Begin Special Build Tool
+SOURCE="$(InputPath)"
+PostBuild_Desc=Copy DLL to Outpost 2 folder (Commented Out: Alt+F7 -> Post-build step, remove "rem")
+PostBuild_Cmds=rem copy ReleaseMinSize\OP2Script.dll \Sierra\Outpost2\ml4Test.dll
+# End Special Build Tool
 # Begin Target
 
 # Name "OP2Script - Win32 Release MinSize"
