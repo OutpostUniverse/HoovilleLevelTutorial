@@ -44,8 +44,8 @@
 //		 fumaroles and magma vents.
 // Note: For fumaroles and magma vents, not all fields make sense
 //		 and should be set to -1.
-// Note: For mining beacons, the last three fields are "rare",
-//		 "bar", and "variant". Set rare = 0 to make the mine a common
+// Note: For mining beacons, the last three fields are *rare*,
+//		 *bar*, and *variant*. Set rare = 0 to make the mine a common
 //		 ore mine and rare = 1 to make the mine a rare ore mine.
 //		 Set bar = 0 for a 3 bar mine, bar = 1 for a 2 bar mine,
 //		 and bar = 2 for a 1 bar mine.
@@ -69,6 +69,7 @@
 //		 To avoid this, one of the best setups is to use seperate
 //		 lists for the resources around each person's base, and
 //		 to use seperate lists for each type of resource.
+// (xOffset, yOffset, beaconType, rare, bar, variant)
 
 BeaconInfo beaconSet1[] = 
 {
@@ -116,6 +117,7 @@ BeaconInfo beaconSet4[] =
 //		 be able to create Guard Posts here. You can either create Guard
 //		 Posts manually by calling CreateUnit, or you can stuff in the 
 //		 appropraite fields for a GuardPost in the vehicle section below.
+// (xOffset, yOffset, buildingType)
 
 BuildingInfo buildingSet1[] = 
 {
@@ -172,6 +174,7 @@ BuildingInfo buildingSet4[] =
 //		 value pair with the second (x,y) value pair.
 // Note: Below we are only defining tubes and no walls, but the
 //		 process is exactly the same. 
+// (x1Offset, y1Offset, x2Offset, y2Offset)
 
 TubeWallInfo tubeSet1[] = 
 {
@@ -222,6 +225,7 @@ TubeWallInfo tubeSet4[] =
 //		 building type and needs a dummy value filled in for
 //		 all the other building types. Especially not when
 //		 this list has all the required fields. )
+// (xOffset, yOffset, vehicleType, cargoType, direction)
 
 VehicleInfo unitSet1[] = 
 {
@@ -288,18 +292,19 @@ VehicleInfo unitSet4[] =
 //		 isn't hidden from the programmer (since that info isn't
 //		 associated with the array data itself). This array of
 //		 structures has 10 fields which consist of 5 pairs of 
-//		 (arraySize, arrayPointer). The macro autosize will take
+//		 (arraySize, arrayPointer). The macro *AutoSize* will take
 //		 an array and output an (arraySize, arrayPointer) pair.
 //		 If you don't use this macro, you must specify all fields
 //		 yourself.
 // Note: Since there are no walls, we are using a size of zero
 //		 for the array and a null pointer to it (a null pointer
 //		 is a value of 0). This is where the double zeros come 
-//		 from below. The autosize macro can't be used to specify
-//		 both these values since the autosize macro can't make
+//		 from below. The AutoSize macro can't be used to specify
+//		 both these values since the AutoSize macro can't make
 //		 use of a null array pointer. (Although, ideally it should
 //		 output two zeros for you if passed a null pointer but
 //		 I can't get this to work. If you know how, let me know.)
+// ((numBeacons, beaconSet), (numBuildings, buildingSet), (numTubes, tubeSet), (numWalls, wallSet), (numUnits, unitSet))
 
 BaseInfo base[] = 
 {
@@ -327,6 +332,7 @@ BaseInfo base[] =
 // Note: In our simple example, the Command Center is at the center of
 //		 each base layout, so these coordinates will refer to the
 //		 location of the Command Center.
+// (x, y, baseInfo)
 
 StartLocation startLocation[] = 
 {
