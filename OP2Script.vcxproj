@@ -47,7 +47,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(TargetPath) ..\..\..\..\GameDownload\Outpost2\trunk\</Command>
+      <Command>copy $(TargetPath) ..\..\..\..\GameDownload\Outpost2\trunk\ml4Hoo.dll</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copying DLL to game folder</Message>
@@ -67,7 +67,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(TargetPath) ..\..\..\..\GameDownload\Outpost2\trunk\</Command>
+      <Command>copy $(TargetPath) ..\..\..\..\GameDownload\Outpost2\trunk\ml4Hoo.dll</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copying DLL to game folder</Message>
