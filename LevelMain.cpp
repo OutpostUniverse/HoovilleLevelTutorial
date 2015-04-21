@@ -36,27 +36,8 @@ ExportLevelDetails("4 Player, LastOne, 'Hooville' map", "on4_01.map", "MULTITEK.
 //		 after saving and loading the game.
 struct ScriptGlobal
 {
-};
-ScriptGlobal scriptGlobal;		// Declare a global instance of the struct
-
-// Outpost 2 learns about the global variable struct by calling the following function:
-// Note: You probably won't ever need to edit this yourself.
-// Note: Called by Outpost 2 to obtain an area of the DLL's memory that needs
-//		 to be saved to (or loaded from) Saved Game files. (That is, script Global variables).
-//		 Either or both of bufferStart and length can be safely set to 0.
-// Note: Setting bufferStart to 0 means no data (including the buffer size)
-//		 is read or written to saved game files. Setting bufferStart to
-//		 non-zero, and length to 0, causes the length to be saved and
-//		 loaded from saved game files. (Uses extra 4 bytes)
-Export void GetSaveRegions(BufferDesc& bufferDesc)
-{
-	// Buffer for Saved Game files
-	bufferDesc.bufferStart = &scriptGlobal;		// Store address of global variable struct
-	bufferDesc.length = sizeof(scriptGlobal);	// Store size of global variable struct
-}
-// Note: The save/load system implies all global level data must be statically sized.
-//		 It also means the level doesn't know when it's about to be saved,
-//		 or when it was just loaded.
+} scriptGlobal;	// Declare a global instance of the struct
+ExportSaveLoadData(scriptGlobal);	// Auto generate GetSaveRegions export
 
 
 // Game Entry Point
