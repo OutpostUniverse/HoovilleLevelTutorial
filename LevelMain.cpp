@@ -22,7 +22,7 @@ extern StartLocation startLocation[];
 //		 See RequiredExports.h for more details.
 // Defines a Multiplayer Last-One-Standing 4 player game (the DLL must be named with a "ml4" prefix).
 // Required data exports  (Description, Map, TechTree, GameType, NumPlayers)
-ExportLevelDetails("4 Player, LastOne, 'Hooville' map", "on4_01.map", "MULTITEK.TXT", MultiLastOneStanding, 4)
+ExportLevelDetails("4P, LoS, 'Hooville'", "on4_01.map", "MULTITEK.TXT", MultiLastOneStanding, 4)
 
 
 // Global Script Data
